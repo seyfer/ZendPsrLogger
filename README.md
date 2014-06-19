@@ -9,9 +9,9 @@ Installation
 
 Get from packagist or github.
 
-`"seyfer/zend-psr-logger": "dev-master"`
+`require "seyfer/zend-psr-logger": "dev-master"`
 
-[[http://modules.zendframework.com/seyfer/ZendPsrLogger]]
+http://modules.zendframework.com/seyfer/ZendPsrLogger
 
 If using Zend2, than enable in application.config.php,
 add 'ZendPsrLogger' to modules.
