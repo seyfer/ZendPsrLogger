@@ -1,6 +1,5 @@
 {
     "name": "seyfer/zend-psr-logger",
-    "version": "1.0.0",
     "description": "Base module for custom loggers. This is module that implement PSR-3 log interface with use Zend\\Log component. Also implement Doctrine log writer.",
     "homepage": "http://seyferseed.ru",
     "authors": [
