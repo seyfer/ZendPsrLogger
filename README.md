@@ -2,6 +2,7 @@ ZendPsrLogger
 =============
 
 This is module that implement PSR-3 log interface with Zend\log component.
+Also implement Doctrine log writer.
 
 Installation
 ------------
