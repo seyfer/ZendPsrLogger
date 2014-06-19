@@ -6,7 +6,13 @@ This is module that implement PSR-3 log interface with Zend\log component.
 Installation
 ------------
 
-Get from packagist or github. If using Zend2, than enable in application.config.php,
+Get from packagist or github.
+
+`"seyfer/zend-psr-logger": "dev-master"`
+
+[[http://modules.zendframework.com/seyfer/ZendPsrLogger]]
+
+If using Zend2, than enable in application.config.php,
 add 'ZendPsrLogger' to modules.
 
 Configuration
