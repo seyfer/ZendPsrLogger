@@ -1,0 +1,34 @@
+{
+    "name": "seyfer/ZendPsrLogger",
+    "version": "1.0.0",
+    "description": "Base module for custom loggers. This is module that implement PSR-3 log interface with use Zend\\Log component",
+    "homepage": "http://seyferseed.ru/",
+    "authors": [
+        {
+            "name": "seyfer",
+            "email": "seyferseed@mail.ru",
+            "homepage": "http://seyferseed.ru",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "zendframework/zend-log": "2.3.*",
+        "doctrine/common": "2.4.*",
+        "doctrine/orm": "2.4.*",
+        "doctrine/doctrine-module": "dev-master",
+        "doctrine/doctrine-orm-module": "dev-master",
+        "psr/log": "1.0.*@dev"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.zendframework.com/"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "ZendPsrLogger\\": "src/"
+        }
+    }
+}
