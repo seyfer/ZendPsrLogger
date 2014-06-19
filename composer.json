@@ -1,5 +1,5 @@
 {
-    "name": "seyfer/ZendPsrLogger",
+    "name": "seyfer/zend-psr-logger",
     "version": "1.0.0",
     "description": "Base module for custom loggers. This is module that implement PSR-3 log interface with use Zend\\Log component",
     "homepage": "http://seyferseed.ru/",
@@ -30,5 +30,6 @@
         "psr-0": {
             "ZendPsrLogger\\": "src/"
         }
-    }
+    },
+    "target-dir": "ZendPsrLogger"
 }
