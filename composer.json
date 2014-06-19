@@ -30,6 +30,5 @@
         "psr-0": {
             "ZendPsrLogger\\": "src/"
         }
-    },
-    "target-dir": "ZendPsrLogger"
+    }
 }
