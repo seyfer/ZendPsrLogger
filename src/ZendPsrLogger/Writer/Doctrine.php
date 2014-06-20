@@ -4,6 +4,8 @@ namespace ZendPsrLogger\Writer;
 
 use Zend\Log\Formatter\Db as DbFormatter;
 use Zend\Log\Writer\AbstractWriter;
+use ZendPsrLogger\Entity\BaseLog;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Description of Doctrine
@@ -24,19 +26,32 @@ class Doctrine extends AbstractWriter
     private $modelClass = null;
 
     /**
+     *
+     * @var BaseLog
+     */
+    private $logEntity;
+
+    /**
+     *
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
      * Constructor
      *
      * @param string $modelClass
      * @param array $columnMap
      * @return void
      */
-    public function __construct($modelClass, $columnMap = null)
+    public function __construct($modelClass, EntityManager $entityManager, $columnMap = null)
     {
         if (!$modelClass || !class_exists($modelClass)) {
             throw new \RuntimeException(__METHOD__ . " you need use entity name "
             . "as param");
         }
 
+        $this->em         = $entityManager;
         $this->columnMap  = $columnMap;
         $this->modelClass = $modelClass;
 
@@ -47,14 +62,15 @@ class Doctrine extends AbstractWriter
 
     protected function doWrite(array $event)
     {
-        \Zend\Debug\Debug::dump($event);
+        $this->logEntity = new $this->modelClass();
+        $this->logEntity->exchangeArray($event);
 
-//        $event = $this->formatter->format($event);
+        if ($event['extra']) {
+            $this->logEntity->exchangeArray($event['extra']);
+        }
 
-        \Zend\Debug\Debug::dump($this->columnMap);
-        \Zend\Debug\Debug::dump($this->modelClass);
-
-        exit();
+        $this->em->persist($this->logEntity);
+        $this->em->flush();
     }
 
 }
