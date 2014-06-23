@@ -87,6 +87,15 @@ class Logger implements LoggerInterface
     }
 
     /**
+     * addExtra alias
+     * @param array $extra
+     */
+    public function setExtra(array $extra = array())
+    {
+        $this->addExtra($extra);
+    }
+
+    /**
      * main log function
      * @param type $level
      * @param type $message
