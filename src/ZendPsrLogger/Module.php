@@ -61,6 +61,9 @@ class Module implements ConsoleUsageProviderInterface
             'factories' => array(
                 'DefaultLogger' => 'ZendPsrLogger\Service\LoggerFactory',
             ),
+            'shared'    => array(
+                'doctrine.entitymanager.orm_default' => false
+            ),
         );
     }
 

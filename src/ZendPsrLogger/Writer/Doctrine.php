@@ -62,8 +62,6 @@ class Doctrine extends AbstractWriter
 
     protected function doWrite(array $event)
     {
-        $this->checkEMConnection();
-
         $this->logEntity = new $this->modelClass();
         $this->logEntity->exchangeArray($event);
 
@@ -71,14 +69,25 @@ class Doctrine extends AbstractWriter
             $this->logEntity->exchangeArray($event['extra']);
         }
 
-        $this->em->persist($this->logEntity);
-        $this->em->flush();
+        try {
+            $this->checkEMConnection();
+
+            $this->em->persist($this->logEntity);
+            $this->em->flush();
+        } catch (\Exception $e) {
+            //reconnect on exeption
+            $this->checkEMConnection();
+        }
     }
 
-    public function getEntityManager() {
+    public function getEntityManager()
+    {
         return $this->em;
     }
 
+    /**
+     * reconnect
+     */
     protected function checkEMConnection()
     {
         if (!$this->getEntityManager()->isOpen()) {
