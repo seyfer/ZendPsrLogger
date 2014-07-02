@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author seyfer
  *
- *
  * @ORM\Table(name="default_log")
  */
 class DefaultLog extends BaseLog

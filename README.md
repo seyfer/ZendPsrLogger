@@ -20,31 +20,48 @@ Configuration
 -------------
 
 Extra column mapping and Entity name in module.config.php.
-Extra column `fileName` for example.
+Extra column `ipaddress` for example.
 
 ```
 'logger'        => array(
-            'entityClassName' => 'MyModule\Entity\Log\MyModuleLog',
-            'columnMap'       => array(
-                'timestamp'    => 'timestamp',
-                'priority'     => 'priority',
-                'priorityName' => 'priorityName',
-                'message'      => 'message',
-                'extra'        => array(
-                    'fileName' => 'fileName',
+        'registeredLoggers' => array(
+            'DefaultLogger' => array(
+                'entityClassName' => '\ZendPsrLogger\Entity\DefaultLog',
+                'columnMap'       => array(
+                    'timestamp'    => 'timestamp',
+                    'priority'     => 'priority',
+                    'priorityName' => 'priorityName',
+                    'message'      => 'message',
+                    'extra'        => array(
+                        'ipaddress' => 'ipaddress',
+                    ),
+                )
             ),
-        )
+            'ElseDefaultLogger' => array(
+                'entityClassName' => '\ZendPsrLogger\Entity\ElseDefaultLog',
+                'columnMap'       => array(
+                    'timestamp'    => 'timestamp',
+                    'priority'     => 'priority',
+                    'priorityName' => 'priorityName',
+                    'message'      => 'message',
+                    'extra'        => array(
+                        'fileName' => 'fileName',
+                    ),
+                )
+            )
+        ),
     ),
 ```
 
-Than set factory with your module logger custom name in Module.php
+Than set abstract factory with your module logger custom name in Module.php
 
 ```
 public function getServiceConfig()
     {
         return array(
-            'factories' => array(
-                'NameLogger' => 'Logger\Service\LoggerFactory',
+            'abstract_factories' => array(
+                'DefaultLogger' => '\ZendPsrLogger\Service\AbstractLoggerFactory',
+                'ElseDefaultLogger' => '\ZendPsrLogger\Service\AbstractLoggerFactory',
             ),
         );
     }
@@ -82,16 +99,27 @@ class MyModuleLog extends BaseLog
 
 ```
 
+And than register your logger in your Module and add config like in example.
+
+
 Usage
 -----
 
 First init logger
 
 ```
+use ZendPsrLogger\LoggerInterface;
+use ZendPsrLogger\NullLogger;
+...
+
+/** @var type LoggerInterface */
+$this->logger
+...
+
 if ($this->getServiceLocator()->has($myLoggerName)) {
     $logger = $this->getServiceLocator()->get($myLoggerName);
 } else {
-    $logger = new \Logger\NullLogger();
+    $logger = new NullLogger();
 }
 
 $this->logger = $logger;
@@ -100,17 +128,27 @@ $this->logger = $logger;
 Than use it's level function
 
 ```
-$this->logger->addExtra(['fileName' => 'test.txt']);
+$this->logger->addExtra(['ipaddress' => '11.22.33.44']);
 $this->logger->debug("test");
 ```
 
 Or log directly using \Psr\Log\LogLevel constants for level parameter.
 
 ```
-$this->logger->log(\Psr\Log\LogLevel::DEBUG, "test", ['fileName' => 'test.txt']);
+$this->logger->log(\Psr\Log\LogLevel::DEBUG, "test", ['ipaddress' => '11.22.33.44']);
 ```
 
 License
 -------
 
 GPL. If you want implement more writers or other improvements - you're welcome!
+
+Change Log
+----------
+
+v1.1.0
+- use AbstractLoggerFactory and new config structure for multiple logger creation
+
+v1.0.1
+- implement Doctrine writer
+- use LoggerFactory for logger creation

@@ -16,16 +16,20 @@ return array(
         ),
     ),
     'logger'        => array(
-        'entityClassName' => '\ZendPsrLogger\Entity\DefaultLog',
-        'columnMap'       => array(
-            'timestamp'    => 'timestamp',
-            'priority'     => 'priority',
-            'priorityName' => 'priorityName',
-            'message'      => 'message',
-            'extra'        => array(
-                'ipaddress' => 'ipaddress',
-            ),
-        )
+        'registeredLoggers' => array(
+            'DefaultLogger' => array(
+                'entityClassName' => '\ZendPsrLogger\Entity\DefaultLog',
+                'columnMap'       => array(
+                    'timestamp'    => 'timestamp',
+                    'priority'     => 'priority',
+                    'priorityName' => 'priorityName',
+                    'message'      => 'message',
+                    'extra'        => array(
+                        'ipaddress' => 'ipaddress',
+                    ),
+                )
+            )
+        ),
     ),
     'module_config' => array(
     ),

@@ -29,17 +29,22 @@ class LoggerFactory implements FactoryInterface
 
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        return $this->create($serviceLocator, "DefaultLogger");
+    }
+
+    public function create(ServiceLocatorInterface $serviceLocator, $requestedName)
+    {
         $entityManager = $this->getEM($serviceLocator);
-//        $entityManager = $serviceLocator->create('Doctrine\ORM\EntityManager');
 
         $config     = $serviceLocator->get('config');
-        $entityName = $config['logger']['entityClassName'];
-        $columnMap  = $config['logger']['columnMap'];
+        $entityName = $config['logger']['registeredLoggers'][$requestedName]['entityClassName'];
+        $columnMap  = $config['logger']['registeredLoggers'][$requestedName]['columnMap'];
 
         $logger = new \ZendPsrLogger\Logger();
         $writer = new \ZendPsrLogger\Writer\Doctrine($entityName, $entityManager, $columnMap);
 
         $logger->addWriter($writer);
+
         return $logger;
     }
 
