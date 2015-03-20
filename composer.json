@@ -1,34 +1,36 @@
 {
-    "name": "seyfer/zend-psr-logger",
-    "description": "Base module for custom loggers. This is module that implement PSR-3 log interface with use Zend\\Log component. Also implement Doctrine log writer.",
-    "homepage": "http://seyferseed.ru",
-    "license": "GPL v2",
-    "authors": [
-        {
-            "name": "seyfer",
-            "email": "seyferseed@mail.ru",
-            "homepage": "http://seyferseed.ru",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=5.4",
-        "zendframework/zend-log": "2.3.*",
-        "doctrine/common": "2.4.*",
-        "doctrine/orm": "2.4.*",
-        "doctrine/doctrine-module": "0.8.*",
-        "doctrine/doctrine-orm-module": "0.8.*",
-        "psr/log": "1.0.*@dev"
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.zendframework.com/"
-        }
-    ],
-    "autoload": {
-        "psr-0": {
-            "ZendPsrLogger\\": "src/"
-        }
+  "name": "seyfer/zend-psr-logger",
+  "description": "Base module for custom loggers. This is module that implement PSR-3 log interface with use Zend\\Log component. Also implement Doctrine log writer.",
+  "homepage": "http://seyferseed.ru",
+  "license": "GPL v2",
+  "authors": [
+    {
+      "name": "seyfer",
+      "email": "seyferseed@mail.ru",
+      "homepage": "http://seyferseed.ru",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "zendframework/zend-log": "2.3.*",
+    "zendframework/zend-modulemanager": "2.3.*",
+    "zendframework/zend-console": "2.3.*",
+    "doctrine/common": "2.4.*",
+    "doctrine/orm": "2.4.*",
+    "doctrine/doctrine-module": "0.8.*",
+    "doctrine/doctrine-orm-module": "0.8.*",
+    "psr/log": "1.0.*@dev"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.zendframework.com/"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "ZendPsrLogger\\": "src/"
+    }
+  }
 }
