@@ -2,7 +2,6 @@
 ### ZendFramework template
 # Composer files
 composer.phar
-composer.lock
 vendor/
 
 # Local configs
