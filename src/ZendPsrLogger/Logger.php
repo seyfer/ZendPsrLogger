@@ -2,10 +2,9 @@
 
 namespace ZendPsrLogger;
 
+use Psr\Log\LogLevel;
 use Zend\Log\Logger as ZendLogger;
 use Zend\Log\LoggerInterface as ZendLoggerInterface;
-use ZendPsrLogger\LoggerInterface;
-use Psr\Log\LogLevel;
 
 /**
  * Description of Logger
@@ -29,8 +28,8 @@ class Logger implements LoggerInterface
 
     /**
      * map from psr log levels
-     * to zend log priorities for compability
-     * @var type
+     * to zend log priorities for compatibility
+     * @var
      */
     private $psrToZendPriorityMap = [
         LogLevel::ALERT     => ZendLogger::ALERT,
@@ -59,7 +58,7 @@ class Logger implements LoggerInterface
             $this->externalLogger = $externalLogger;
         } else {
             throw new \RuntimeException(__METHOD__ . " you must set log class "
-            . "that implement Zend\Log\LoggerInterface");
+                                        . "that implement Zend\\Log\\LoggerInterface");
         }
     }
 
@@ -77,7 +76,7 @@ class Logger implements LoggerInterface
      * usage: addExtra(['extraName' => 'extraValue']);
      * @param array $extra
      */
-    public function addExtra(array $extra = array())
+    public function addExtra(array $extra = [])
     {
         if (count($this->getExtra()) > 0) {
             $this->extra = array_merge($this->getExtra(), $extra);
@@ -90,35 +89,35 @@ class Logger implements LoggerInterface
      * addExtra alias
      * @param array $extra
      */
-    public function setExtra(array $extra = array())
+    public function setExtra(array $extra = [])
     {
         $this->addExtra($extra);
     }
 
     /**
      * main log function
-     * @param type $level
-     * @param type $message
+     * @param $level
+     * @param $message
      * @param array $context
+     * @return null|void
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         if (isset($this->psrToZendPriorityMap[$level])) {
             $level = $this->psrToZendPriorityMap[$level];
         }
 
 
-
         $this->externalLogger
-                ->log($level, $message, $this->getExtraWithContextMerged($context));
+            ->log($level, $message, $this->getExtraWithContextMerged($context));
     }
 
     /**
      * merge extra with current context
      * @param array $context
-     * @return type
+     * @return array
      */
-    private function getExtraWithContextMerged(array $context = array())
+    private function getExtraWithContextMerged(array $context = [])
     {
         $extra = $this->getExtra();
         if (!empty($context)) {
@@ -128,59 +127,59 @@ class Logger implements LoggerInterface
         return $extra;
     }
 
-    public function alert($message, array $context = array())
+    public function alert($message, array $context = [])
     {
         $this->externalLogger->alert($message, $this->getExtraWithContextMerged($context));
     }
 
-    public function critical($message, array $context = array())
+    public function critical($message, array $context = [])
     {
         $this->externalLogger->crit($message, $this->getExtraWithContextMerged($context));
     }
 
-    public function emergency($message, array $context = array())
+    public function emergency($message, array $context = [])
     {
         $this->externalLogger->emerg($message, $this->getExtraWithContextMerged($context));
     }
 
-    public function error($message, array $context = array())
+    public function error($message, array $context = [])
     {
         $this->externalLogger->err($message, $this->getExtraWithContextMerged($context));
     }
 
-    public function warning($message, array $context = array())
+    public function warning($message, array $context = [])
     {
         $this->externalLogger->warn($message, $this->getExtraWithContextMerged($context));
     }
 
-    public function debug($message, array $context = array())
+    public function debug($message, array $context = [])
     {
         $this->externalLogger->debug($message, $this->getExtraWithContextMerged($context));
     }
 
-    public function info($message, array $context = array())
+    public function info($message, array $context = [])
     {
         $this->externalLogger->info($message, $this->getExtraWithContextMerged($context));
     }
 
-    public function notice($message, array $context = array())
+    public function notice($message, array $context = [])
     {
         $this->externalLogger->notice($message, $this->getExtraWithContextMerged($context));
     }
 
     /**
      * call for other methods
-     * @param type $name
-     * @param type $arguments
+     * @param $name
+     * @param $arguments
      * @throws \BadMethodCallException
      */
     public function __call($name, $arguments)
     {
         if (method_exists($this->externalLogger, $name)) {
-            \call_user_func_array(array($this->externalLogger, $name), $arguments);
+            \call_user_func_array([$this->externalLogger, $name], $arguments);
         } else {
             throw new \BadMethodCallException(__METHOD__ . " method " .
-            $name . " does not exists");
+                                              $name . " does not exists");
         }
     }
 

@@ -2,10 +2,10 @@
 
 namespace ZendPsrLogger\Writer;
 
+use Doctrine\ORM\EntityManager;
 use Zend\Log\Formatter\Db as DbFormatter;
 use Zend\Log\Writer\AbstractWriter;
 use ZendPsrLogger\Entity\BaseLog;
-use Doctrine\ORM\EntityManager;
 
 /**
  * Description of Doctrine
@@ -41,14 +41,14 @@ class Doctrine extends AbstractWriter
      * Constructor
      *
      * @param string $modelClass
+     * @param EntityManager $entityManager
      * @param array $columnMap
-     * @return void
      */
     public function __construct($modelClass, EntityManager $entityManager, $columnMap = null)
     {
         if (!$modelClass || !class_exists($modelClass)) {
             throw new \RuntimeException(__METHOD__ . " you need use entity name "
-            . "as param");
+                                        . "as param");
         }
 
         $this->em         = $entityManager;
@@ -60,6 +60,9 @@ class Doctrine extends AbstractWriter
         }
     }
 
+    /**
+     * @param array $event
+     */
     protected function doWrite(array $event)
     {
         $this->logEntity = new $this->modelClass();
@@ -80,6 +83,9 @@ class Doctrine extends AbstractWriter
         }
     }
 
+    /**
+     * @return EntityManager
+     */
     public function getEntityManager()
     {
         return $this->em;
@@ -95,7 +101,7 @@ class Doctrine extends AbstractWriter
             $config     = $this->getEntityManager()->getConfiguration();
 
             $this->em = $this->getEntityManager()->create(
-                    $connection, $config
+                $connection, $config
             );
         }
     }

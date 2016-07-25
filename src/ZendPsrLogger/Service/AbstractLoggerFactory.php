@@ -2,11 +2,10 @@
 
 namespace ZendPsrLogger\Service;
 
-use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use ZendPsrLogger\Service\LoggerFactory;
 use Doctrine\ORM\EntityManager;
+use Zend\ServiceManager\AbstractFactoryInterface;
+use Zend\ServiceManager\Exception\ServiceNotFoundException;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use ZendPsrLogger\Doctrine\ORM\EntityManagerHelper;
 
 /**
@@ -29,6 +28,12 @@ class AbstractLoggerFactory implements AbstractFactoryInterface
         return $entityManager;
     }
 
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param $name
+     * @param $requestedName
+     * @return bool
+     */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
         if (strpos($requestedName, 'Logger') !== FALSE) {
@@ -36,9 +41,10 @@ class AbstractLoggerFactory implements AbstractFactoryInterface
             $config = $serviceLocator->get('config');
 
             if (!isset($config['logger']) ||
-                    !isset($config['logger']['registeredLoggers'][$requestedName])) {
+                !isset($config['logger']['registeredLoggers'][$requestedName])
+            ) {
                 throw new ServiceNotFoundException(__METHOD__ . " you need add "
-                . "logger => registegedLoggers => $requestedName to your config");
+                                                   . "logger => registegedLoggers => $requestedName to your config");
             }
 
             $entityName = $config['logger']['registeredLoggers'][$requestedName]['entityClassName'];
@@ -46,7 +52,7 @@ class AbstractLoggerFactory implements AbstractFactoryInterface
 
             if (!EntityManagerHelper::isEntity($em, $entityName)) {
                 throw new ServiceNotFoundException(__METHOD__ . " you need set valid "
-                . " mapped entity class name in $requestedName => entityClassName");
+                                                   . " mapped entity class name in $requestedName => entityClassName");
             }
 
             return TRUE;
@@ -55,9 +61,16 @@ class AbstractLoggerFactory implements AbstractFactoryInterface
         return FALSE;
     }
 
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param $name
+     * @param $requestedName
+     * @return \ZendPsrLogger\Logger
+     */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
         $factory = new LoggerFactory();
+
         return $factory->create($serviceLocator, $requestedName);
     }
 

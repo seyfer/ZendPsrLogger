@@ -116,7 +116,7 @@ abstract class BaseLog
         //fix underscore
         if (strpos($workKey, "_") !== FALSE) {
 
-            $workKey = preg_replace_callback('/_(.?)/', function($a) {
+            $workKey = preg_replace_callback('/_(.?)/', function ($a) {
                 return strtoupper($a[1]);
             }, $key);
         }

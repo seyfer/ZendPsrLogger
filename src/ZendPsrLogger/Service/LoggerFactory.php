@@ -2,10 +2,9 @@
 
 namespace ZendPsrLogger\Service;
 
+use Doctrine\ORM\EntityManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceManager;
-use Doctrine\ORM\EntityManager;
 
 /**
  * Description of LoggerFactory
@@ -27,11 +26,20 @@ class LoggerFactory implements FactoryInterface
         return $entityManager;
     }
 
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return \ZendPsrLogger\Logger
+     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return $this->create($serviceLocator, "DefaultLogger");
     }
 
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param $requestedName
+     * @return \ZendPsrLogger\Logger
+     */
     public function create(ServiceLocatorInterface $serviceLocator, $requestedName)
     {
         $entityManager = $this->getEM($serviceLocator);

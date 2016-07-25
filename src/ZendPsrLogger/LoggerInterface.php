@@ -3,7 +3,6 @@
 namespace ZendPsrLogger;
 
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
-use Zend\Log\LoggerInterface as ZendLoggerInterface;
 
 /**
  *
@@ -20,5 +19,5 @@ interface LoggerInterface extends PsrLoggerInterface
     /**
      * @param array $extra
      */
-    public function addExtra(array $extra = array());
+    public function addExtra(array $extra = []);
 }

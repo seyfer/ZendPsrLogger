@@ -1,58 +1,58 @@
 <?php
 
-return array(
-    'doctrine'      => array(
-        'driver' => array(
-            'ZendPsrLogger_entities' => array(
+return [
+    'doctrine'      => [
+        'driver' => [
+            'ZendPsrLogger_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/ZendPsrLogger/Entity')
-            ),
-            'orm_default'            => array(
-                'drivers' => array(
+                'paths' => [__DIR__ . '/../src/ZendPsrLogger/Entity']
+            ],
+            'orm_default'            => [
+                'drivers' => [
                     'ZendPsrLogger\Entity' => 'ZendPsrLogger_entities'
-                )
-            )
-        ),
-    ),
-    'logger'        => array(
-        'registeredLoggers' => array(
-            'DefaultLogger' => array(
+                ]
+            ]
+        ],
+    ],
+    'logger'        => [
+        'registeredLoggers' => [
+            'DefaultLogger' => [
                 'entityClassName' => '\ZendPsrLogger\Entity\DefaultLog',
-                'columnMap'       => array(
+                'columnMap'       => [
                     'timestamp'    => 'timestamp',
                     'priority'     => 'priority',
                     'priorityName' => 'priorityName',
                     'message'      => 'message',
-                    'extra'        => array(
+                    'extra'        => [
                         'ipaddress' => 'ipaddress',
-                    ),
-                )
-            )
-        ),
-    ),
-    'module_config' => array(
-    ),
-    'router'        => array(
-        'routes' => array(
-        ),
-    ),
-    'console'       => array(
-        'router' => array(
-            'routes' => array(
-            )
-        )
-    ),
-    'controllers'   => array(
-        'invokables' => array(
-        ),
-    ),
-    'view_manager'  => array(
+                    ],
+                ]
+            ]
+        ],
+    ],
+    'module_config' => [
+    ],
+    'router'        => [
+        'routes' => [
+        ],
+    ],
+    'console'       => [
+        'router' => [
+            'routes' => [
+            ]
+        ]
+    ],
+    'controllers'   => [
+        'invokables' => [
+        ],
+    ],
+    'view_manager'  => [
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
-        'template_path_stack'      => array(
+        'template_path_stack'      => [
             __DIR__ . '/../view',
-        ),
-    ),
-);
+        ],
+    ],
+];

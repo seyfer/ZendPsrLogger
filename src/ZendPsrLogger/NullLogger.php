@@ -14,12 +14,12 @@ class NullLogger extends PsrNullLogger
 
     /**
      * logs to null
-     * @param type $level
-     * @param type $message
-     * @param type $context
+     * @param $level
+     * @param $message
+     * @param $context
      * @return null
      */
-    public function log($level, $message, $context = array())
+    public function log($level, $message, array $context = [])
     {
         parent::log($level, $message, $context);
     }

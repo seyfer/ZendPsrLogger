@@ -10,11 +10,11 @@
 
 namespace ZendPsrLogger;
 
+use Zend\Console\Adapter\AdapterInterface as Console;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
+use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface,
-    Zend\ModuleManager\Feature\DependencyIndicatorInterface,
-    Zend\Console\Adapter\AdapterInterface as Console;
 use ZendPsrLogger\Doctrine\ORM\EntityManagerHelper;
 
 class Module implements ConsoleUsageProviderInterface, DependencyIndicatorInterface
@@ -29,6 +29,9 @@ class Module implements ConsoleUsageProviderInterface, DependencyIndicatorInterf
         $this->addDefaultLogExtraIfValid($e);
     }
 
+    /**
+     * @param MvcEvent $e
+     */
     private function addDefaultLogExtraIfValid(MvcEvent $e)
     {
         $request = $e->getParam('request');
@@ -38,21 +41,25 @@ class Module implements ConsoleUsageProviderInterface, DependencyIndicatorInterf
 
             $entityName = $this->getDefaultLogEntityName($sm);
 
-            $em = $sm->get("Doctrine\ORM\EntityManager");
+            $em = $sm->get("Doctrine\\ORM\\EntityManager");
             if ($entityName && EntityManagerHelper::isEntity($em, $entityName)) {
                 $servParam  = $request->getServer();
                 $remoteAddr = $servParam->get('REMOTE_ADDR');
 
                 $e->getApplication()->getServiceManager()
-                        ->get('DefaultLogger')
-                        ->addExtra(array(
-                            'ipaddress' => $remoteAddr,
-                                )
-                );
+                  ->get('DefaultLogger')
+                  ->addExtra([
+                                 'ipaddress' => $remoteAddr,
+                             ]
+                  );
             }
         }
     }
 
+    /**
+     * @param $sm
+     * @return mixed
+     */
     private function getDefaultLogEntityName($sm)
     {
         $config           = $sm->get('config');
@@ -72,39 +79,36 @@ class Module implements ConsoleUsageProviderInterface, DependencyIndicatorInterf
 
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     public function getServiceConfig()
     {
-        return array(
-            'abstract_factories' => array(
+        return [
+            'abstract_factories' => [
                 'DefaultLogger' => '\ZendPsrLogger\Service\AbstractLoggerFactory',
-            ),
-            'shared'             => array(
-                'doctrine.entitymanager.orm_default' => false
-            ),
-        );
+            ],
+        ];
     }
 
     public function getConsoleUsage(Console $console)
     {
-        return array(
-        );
+        return [
+        ];
     }
 
     public function getModuleDependencies()
     {
-        return array(
+        return [
             'DoctrineModule',
             'DoctrineORMModule',
-        );
+        ];
     }
 
 }
