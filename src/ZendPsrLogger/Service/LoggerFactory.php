@@ -44,9 +44,9 @@ class LoggerFactory implements FactoryInterface
     {
         $entityManager = $this->getEM($serviceLocator);
 
-        $config     = $serviceLocator->get('config');
+        $config = $serviceLocator->get('config');
         $entityName = $config['logger']['registeredLoggers'][$requestedName]['entityClassName'];
-        $columnMap  = $config['logger']['registeredLoggers'][$requestedName]['columnMap'];
+        $columnMap = $config['logger']['registeredLoggers'][$requestedName]['columnMap'];
 
         $logger = new \ZendPsrLogger\Logger();
         $writer = new \ZendPsrLogger\Writer\Doctrine($entityName, $entityManager, $columnMap);

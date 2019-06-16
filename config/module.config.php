@@ -1,57 +1,57 @@
 <?php
 
 return [
-    'doctrine'      => [
+    'doctrine' => [
         'driver' => [
             'ZendPsrLogger_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/ZendPsrLogger/Entity']
+                'paths' => [__DIR__ . '/../src/ZendPsrLogger/Entity'],
             ],
-            'orm_default'            => [
+            'orm_default' => [
                 'drivers' => [
-                    'ZendPsrLogger\Entity' => 'ZendPsrLogger_entities'
-                ]
-            ]
+                    'ZendPsrLogger\Entity' => 'ZendPsrLogger_entities',
+                ],
+            ],
         ],
     ],
-    'logger'        => [
+    'logger' => [
         'registeredLoggers' => [
             'DefaultLogger' => [
                 'entityClassName' => '\ZendPsrLogger\Entity\DefaultLog',
-                'columnMap'       => [
-                    'timestamp'    => 'timestamp',
-                    'priority'     => 'priority',
+                'columnMap' => [
+                    'timestamp' => 'timestamp',
+                    'priority' => 'priority',
                     'priorityName' => 'priorityName',
-                    'message'      => 'message',
-                    'extra'        => [
+                    'message' => 'message',
+                    'extra' => [
                         'ipaddress' => 'ipaddress',
                     ],
-                ]
-            ]
+                ],
+            ],
         ],
     ],
     'module_config' => [
     ],
-    'router'        => [
+    'router' => [
         'routes' => [
         ],
     ],
-    'console'       => [
+    'console' => [
         'router' => [
             'routes' => [
-            ]
-        ]
+            ],
+        ],
     ],
-    'controllers'   => [
+    'controllers' => [
         'invokables' => [
         ],
     ],
-    'view_manager'  => [
+    'view_manager' => [
         'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
-        'template_path_stack'      => [
+        'display_exceptions' => true,
+        'doctype' => 'HTML5',
+        'template_path_stack' => [
             __DIR__ . '/../view',
         ],
     ],

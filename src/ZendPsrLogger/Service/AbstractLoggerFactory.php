@@ -44,15 +44,15 @@ class AbstractLoggerFactory implements AbstractFactoryInterface
                 !isset($config['logger']['registeredLoggers'][$requestedName])
             ) {
                 throw new ServiceNotFoundException(__METHOD__ . " you need add "
-                                                   . "logger => registegedLoggers => $requestedName to your config");
+                    . "logger => registegedLoggers => $requestedName to your config");
             }
 
             $entityName = $config['logger']['registeredLoggers'][$requestedName]['entityClassName'];
-            $em         = $this->getEM($serviceLocator);
+            $em = $this->getEM($serviceLocator);
 
             if (!EntityManagerHelper::isEntity($em, $entityName)) {
                 throw new ServiceNotFoundException(__METHOD__ . " you need set valid "
-                                                   . " mapped entity class name in $requestedName => entityClassName");
+                    . " mapped entity class name in $requestedName => entityClassName");
             }
 
             return TRUE;

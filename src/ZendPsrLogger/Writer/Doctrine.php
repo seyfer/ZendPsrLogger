@@ -47,12 +47,11 @@ class Doctrine extends AbstractWriter
     public function __construct($modelClass, EntityManager $entityManager, $columnMap = null)
     {
         if (!$modelClass || !class_exists($modelClass)) {
-            throw new \RuntimeException(__METHOD__ . " you need use entity name "
-                                        . "as param");
+            throw new \RuntimeException(__METHOD__ . " you need use entity name " . "as param");
         }
 
-        $this->em         = $entityManager;
-        $this->columnMap  = $columnMap;
+        $this->em = $entityManager;
+        $this->columnMap = $columnMap;
         $this->modelClass = $modelClass;
 
         if (!$this->hasFormatter()) {
@@ -98,7 +97,7 @@ class Doctrine extends AbstractWriter
     {
         if (!$this->getEntityManager()->isOpen()) {
             $connection = $this->getEntityManager()->getConnection();
-            $config     = $this->getEntityManager()->getConfiguration();
+            $config = $this->getEntityManager()->getConfiguration();
 
             $this->em = $this->getEntityManager()->create(
                 $connection, $config

@@ -22,7 +22,7 @@ class Module implements ConsoleUsageProviderInterface, DependencyIndicatorInterf
 
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
@@ -43,15 +43,15 @@ class Module implements ConsoleUsageProviderInterface, DependencyIndicatorInterf
 
             $em = $sm->get("Doctrine\\ORM\\EntityManager");
             if ($entityName && EntityManagerHelper::isEntity($em, $entityName)) {
-                $servParam  = $request->getServer();
+                $servParam = $request->getServer();
                 $remoteAddr = $servParam->get('REMOTE_ADDR');
 
                 $e->getApplication()->getServiceManager()
-                  ->get('DefaultLogger')
-                  ->addExtra([
-                                 'ipaddress' => $remoteAddr,
-                             ]
-                  );
+                    ->get('DefaultLogger')
+                    ->addExtra([
+                            'ipaddress' => $remoteAddr,
+                        ]
+                    );
             }
         }
     }
@@ -62,7 +62,7 @@ class Module implements ConsoleUsageProviderInterface, DependencyIndicatorInterf
      */
     private function getDefaultLogEntityName($sm)
     {
-        $config           = $sm->get('config');
+        $config = $sm->get('config');
         $defaultLogConfig = $config['logger']['registeredLoggers']['DefaultLogger'];
 
         if (isset($defaultLogConfig)) {

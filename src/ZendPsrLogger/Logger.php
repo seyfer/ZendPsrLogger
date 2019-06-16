@@ -32,14 +32,14 @@ class Logger implements LoggerInterface
      * @var
      */
     private $psrToZendPriorityMap = [
-        LogLevel::ALERT     => ZendLogger::ALERT,
-        LogLevel::CRITICAL  => ZendLogger::CRIT,
-        LogLevel::DEBUG     => ZendLogger::DEBUG,
+        LogLevel::ALERT => ZendLogger::ALERT,
+        LogLevel::CRITICAL => ZendLogger::CRIT,
+        LogLevel::DEBUG => ZendLogger::DEBUG,
         LogLevel::EMERGENCY => ZendLogger::EMERG,
-        LogLevel::ERROR     => ZendLogger::ERR,
-        LogLevel::INFO      => ZendLogger::INFO,
-        LogLevel::NOTICE    => ZendLogger::NOTICE,
-        LogLevel::WARNING   => ZendLogger::WARN,
+        LogLevel::ERROR => ZendLogger::ERR,
+        LogLevel::INFO => ZendLogger::INFO,
+        LogLevel::NOTICE => ZendLogger::NOTICE,
+        LogLevel::WARNING => ZendLogger::WARN,
     ];
 
     /**
@@ -58,7 +58,7 @@ class Logger implements LoggerInterface
             $this->externalLogger = $externalLogger;
         } else {
             throw new \RuntimeException(__METHOD__ . " you must set log class "
-                                        . "that implement Zend\\Log\\LoggerInterface");
+                . "that implement Zend\\Log\\LoggerInterface");
         }
     }
 
@@ -179,7 +179,7 @@ class Logger implements LoggerInterface
             \call_user_func_array([$this->externalLogger, $name], $arguments);
         } else {
             throw new \BadMethodCallException(__METHOD__ . " method " .
-                                              $name . " does not exists");
+                $name . " does not exists");
         }
     }
 
